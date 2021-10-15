@@ -55,7 +55,7 @@ def update(user_id: int):
     if 'username' in request.json.keys():
         u.username = request.json['username']
     if 'password' in request.json.keys():
-        u.password = request.json['password']
+        u.password = scramble(request.json['password'])
     try:
         db.session.commit()
         return jsonify(True)
