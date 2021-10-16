@@ -7,9 +7,15 @@ A simple payroll database/API for managing contract-based work, built on Postgre
 
 |Method|Route|Description|
 |------|-----|-----------|
-|GET|/user|Show all user accounts.|
+|GET|/user|Show all user accounts. Password hashes are not displayed.|
 |POST, PUT|/user|Add a new user account. Request body must include username and password, can optionally include email address.|
 |DELETE|/user/:id|Delete user account.|
 |POST, PUT|/user/:id|Modify user account. Request body may include new email, username or password.| 
 
-### Employee
+### **Employee** (currently implemented)
+
+|Method|Route|Description|
+|------|-----|-----------|
+|GET|/employee|Show all employee IDs. PII is not displayed.|
+|POST, PUT|/employee|Add a new employee to the database. Request body must include
+
