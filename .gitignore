@@ -7,4 +7,4 @@
 /tmp
 insomnia.json
 *__pycache__
-
+*.bak
