@@ -20,3 +20,10 @@ A simple payroll database/API for managing contract-based work, built on Postgre
 |POST, PUT|/employee|Add a new employee to the database. Request body may include `ssn`, `first_name`, `last_name` and/or `user_id`.|
 |POST, PUT|/employee/:id|Modify employee data. Request body may include new `ssn`, `first_name`, `last_name` and/or `user_id`. 
 
+### **Employee** (currently implemented)
+
+|Method|Route|Description|
+|------|-----|-----------|
+|GET|/employee|Show all employee IDs. PII is not displayed.|
+|POST, PUT|/employee|Add a new employee to the database. Request body may include `ssn`, `first_name`, `last_name` and/or user_id.
+
