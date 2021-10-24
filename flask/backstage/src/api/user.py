@@ -10,11 +10,11 @@ def scramble(password: str):
     return hashlib.sha512((password + salt).encode('utf-8')).hexdigest()
 
 
-bp = Blueprint('users', __name__, url_prefix='/users')
+bp = Blueprint('user', __name__, url_prefix='/user')
 
 
 @bp.route('', methods=['GET'])
-def index():
+def show_user_accounts():
     user_accounts = UserAccount.query.all()
     result = []
     for u in user_accounts:
@@ -22,7 +22,7 @@ def index():
     return jsonify(result)
 
 
-@bp.route('', methods=['POST'])
+@bp.route('', methods=['POST', 'PUT'])
 def create():
     if 'username' not in request.json or 'password' not in request.json:
         return abort(400)
@@ -47,14 +47,14 @@ def delete(user_id: int):
         return jsonify(False)
 
 
-@bp.route('/<int:user_id>', methods=['PUT'])
+@bp.route('/<int:user_id>', methods=['POST', 'PUT'])
 def update(user_id: int):
     u = UserAccount.query.get_or_404(user_id)
-    if 'email' in request.json.keys():
+    if 'email' in request.json:
         u.email = request.json['email']
-    if 'username' in request.json.keys():
+    if 'username' in request.json:
         u.username = request.json['username']
-    if 'password' in request.json.keys():
+    if 'password' in request.json:
         u.password = scramble(request.json['password'])
     try:
         db.session.commit()

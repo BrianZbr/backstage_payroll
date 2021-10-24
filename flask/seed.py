@@ -10,10 +10,7 @@ from faker import Faker
 from backstage.src.models import Employee, UserAccount, db
 from backstage.src import create_app
 
-USER_COUNT = 20
 EMPLOYEE_COUNT = 30
-
-assert USER_COUNT <= EMPLOYEE_COUNT
 
 
 def random_passhash():
@@ -24,17 +21,15 @@ def random_passhash():
             k=random.randint(8, 15)  # length of pw
         )
     )
-
     salt = secrets.token_hex(16)
-
     return hashlib.sha512((raw + salt).encode('utf-8')).hexdigest()
 
 
 def truncate_tables():
     """Delete all rows from database tables"""
-    db.session.execute(likes_table.delete())
-    Employee.query.delete()
+    # db.session.execute(likes_table.delete())
     UserAccount.query.delete()
+    Employee.query.delete()
     db.session.commit()
 
 
@@ -44,48 +39,31 @@ def main():
     app.app_context().push()
     truncate_tables()
     fake = Faker()
-
-    last_user = None  # save last user
-    for _ in range(USER_COUNT):
-        last_user = User(
-            username=fake.unique.first_name().lower() + str(random.randint(1, 150)),
-            password=random_passhash()
+    last_user = None
+    last_employee = None
+    for _ in range(EMPLOYEE_COUNT):
+        first_name = fake.unique.first_name()
+        last_name = fake.unique.last_name()
+        ssn = fake.ssn().replace('-', '')
+        last_employee = Employee(
+            first_name=first_name,
+            last_name=last_name,
+            ssn=ssn
         )
-        db.session.add(last_user)
-
-    # insert users
+        db.session.add(last_employee)
     db.session.commit()
-
-    last_tweet = None  # save last tweet
-    for _ in range(TWEET_COUNT):
-        last_tweet = Tweet(
-            content=fake.sentence(),
-            user_id=random.randint(last_user.id - USER_COUNT + 1, last_user.id)
-        )
-        db.session.add(last_tweet)
-
-    # insert tweets
-    db.session.commit()
-
-    user_tweet_pairs = set()
-    while len(user_tweet_pairs) < LIKE_COUNT:
-
-        candidate = (
-            random.randint(last_user.id - USER_COUNT + 1, last_user.id),
-            random.randint(last_tweet.id - TWEET_COUNT + 1, last_tweet.id)
-        )
-
-        if candidate in user_tweet_pairs:
-            continue  # pairs must be unique
-
-        user_tweet_pairs.add(candidate)
-
-    new_likes = [{"user_id": pair[0], "tweet_id": pair[1]}
-                 for pair in list(user_tweet_pairs)]
-    insert_likes_query = likes_table.insert().values(new_likes)
-    db.session.execute(insert_likes_query)
-
-    # insert likes
+    employees = Employee.query.all()
+    for employee in employees:
+        add_user = random.randint(0, 1)
+        if add_user == 1:
+            username = employee.first_name.lower() + str(random.randint(1, 150))
+            last_user = UserAccount(
+                username=username,
+                email=f"{username}@{fake.domain_name()}",
+                password=random_passhash(),
+                employee_id=employee.employee_id,
+            )
+            db.session.add(last_user)
     db.session.commit()
 
 
