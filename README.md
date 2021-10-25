@@ -20,5 +20,19 @@ This project (a work in progress) represents a simple payroll database/API for m
 |POST, PUT|/employee|Add a new employee to the database. Request body may include `ssn`, `first_name`, `last_name` and/or `user_id`.|
 |POST, PUT|/employee/:id|Modify employee data. Request body may include new `ssn`, `first_name`, `last_name` and/or `user_id`. 
 
+### **Client**
+|Method|Route|Description|
+|------|-----|-----------|
+|GET|/client|Show all client company names.|
+|POST, PUT|/client|Add a new client to the database. Request body must consist of `company_name`.|
+|POST, PUT|/client/:id|Modify client name. Request body must consist of `company_name`. 
+
+### **Contract**
+|Method|Route|Description|
+|------|-----|-----------|
+|GET|/contract|Show all contracts.|
+|POST, PUT|/client|Add a new client to the database. Request body must consist of `company_name`.|
+|POST, PUT|/client/:id|Modify client name. Request body must consist of `company_name`. 
+
 ### **To Be Implemented**: 
-/client, /contract, /workrole, /employee-workrole, /timeworked, /paycheck
+/workrole, /employee-workrole, /timeworked, /paycheck

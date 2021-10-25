@@ -63,6 +63,13 @@ class Client(db.Model):
         db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     company_name = db.Column(db.Text, unique=True)
 
+    def serialize(self):
+        return{
+            'client_id': self.client_id,
+            'created': self.created,
+            'company_name': self.company_name
+        }
+
 
 class Contract(db.Model):
     __tablename__ = 'contract'
