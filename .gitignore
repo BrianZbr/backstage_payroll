@@ -4,5 +4,6 @@
 /tmp
 insomnia.json
 __pycache__
+*.pyc
 *.bak
 Changes/*
