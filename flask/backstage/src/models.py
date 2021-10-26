@@ -82,6 +82,16 @@ class Contract(db.Model):
     end_date = db.Column(db.Date)
     contract_description = db.Column(db.Text)
 
+    def serialize(self):
+        return {
+            'contract_id': self.contract_id,
+            'created': self.created,
+            'client_id': self.client_id,
+            'start_date': self.start_date,
+            'end_date': self.end_date,
+            'contract_description': self.contract_description
+        }
+
 
 class WorkRole(db.Model):
     __tablename__ = 'work_role'

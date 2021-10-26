@@ -3,6 +3,6 @@
 /scratch.txt
 /tmp
 insomnia.json
-*__pycache__*
+__pycache__
 *.bak
 Changes/*

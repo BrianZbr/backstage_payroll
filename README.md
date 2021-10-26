@@ -27,13 +27,12 @@ This project (a work in progress) represents a simple payroll database/API for m
 |POST, PUT|/client|Add a new client to the database. Request body must consist of `company_name`.|
 |POST, PUT|/client/:id|Modify client name. Request body must consist of `company_name`. 
 
-<!--
 ### **Contract**
 |Method|Route|Description|
 |------|-----|-----------|
 |GET|/contract|Show all contracts.|
-|POST, PUT|/client|Add a new client to the database. Request body must consist of `company_name`.|
-|POST, PUT|/client/:id|Modify client name. Request body must consist of `company_name`. 
--->
+|POST, PUT|/client|Add a new contract to the database. Request body must include `client_id`. It may include `start_date`, `end_date`, and/or `contract_description`. |
+|POST, PUT|/client/:id|Modify contract. Request body may include `start_date`, `end_date`, and/or `contract_description`. 
+
 ### **To Be Implemented**: 
 /workrole, /employee-workrole, /timeworked, /paycheck
