@@ -38,3 +38,19 @@ def create_contract():
     db.session.add(c)
     db.session.commit()
     return jsonify(c.serialize())
+
+
+@bp.route('/<int:contract_id>', methods=['POST', 'PUT'])
+def update_contract(contract_id: int):
+    c = Contract.query.get_or_404(contract_id)
+    if 'start_date' in request.json:
+        c.start_date = request.json['start_date']
+    if 'end_date' in request.json:
+        c.end_date = request.json['end_date']
+    if 'contract_description' in request.json:
+        c.contract_description = request.json['contract_description']
+    try:
+        db.session.commit()
+        return jsonify(True)
+    except:
+        return jsonify(False)
