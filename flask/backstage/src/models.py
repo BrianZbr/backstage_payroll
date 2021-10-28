@@ -9,7 +9,6 @@ class Employee(db.Model):
     employee_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     created = db.Column(
         db.DateTime, default=datetime.datetime.utcnow, nullable=False)
-    # db.Column(db.Integer, unique=True)
     user = db.relationship(
         "UserAccount", back_populates="employee", uselist=False)
     ssn = db.Column(db.String(9))
@@ -100,9 +99,27 @@ class WorkRole(db.Model):
         db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     contract_id = db.Column(db.Integer, db.ForeignKey(
         'contract.contract_id'), unique=True, nullable=False)
+    workrole_description = db.Column(db.Text)
     hour_budget = db.Column(db.Numeric)
     hourly_pay = db.Column(db.Numeric)
     hourly_deduction = db.Column(db.Numeric)
+
+    def serialize(self):
+        if self.hour_budget:
+            self.hour_budget = float(self.hour_budget)
+        if self.hourly_pay:
+            self.hourly_pay = float(self.hourly_pay)
+        if self.hourly_deduction:
+            self.hourly_deduction = float(self.hourly_deduction)
+        return{
+            'work_role_id': self.work_role_id,
+            'created': self.created,
+            'contract_id': self.contract_id,
+            'workrole_description': self.workrole_description,
+            'hour_budget': self.hour_budget,
+            'hourly_pay': self.hourly_pay,
+            'hourly_deduction': self.hourly_deduction
+        }
 
 
 employee_work_role_table = db.Table(
