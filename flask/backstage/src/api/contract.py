@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, abort
 from ..models import Contract, db
 
 bp = Blueprint('contract', __name__, url_prefix='/contract')
