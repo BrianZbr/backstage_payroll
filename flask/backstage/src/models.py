@@ -3,28 +3,24 @@ import datetime
 
 db = SQLAlchemy()
 
-
-class Employee(db.Model):
-    __tablename__ = 'employee'
-    employee_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    created = db.Column(
-        db.DateTime, default=datetime.datetime.utcnow, nullable=False)
-    user = db.relationship(
-        "UserAccount", back_populates="employee", uselist=False)
-    ssn = db.Column(db.String(9))
-    first_name = db.Column(db.Text)
-    last_name = db.Column(db.Text)
-
-    def __init__(self, ssn: str, first_name: str, last_name: str):
-        self.ssn = ssn
-        self.first_name = first_name
-        self.last_name = last_name
-
-    def serialize(self):
-        return {
-            'employee_id': self.employee_id,
-            'created': self.created
-        }
+employee_workrole_table = db.Table(
+    'employee_workrole',
+    db.Column(
+        'employee_id', db.Integer,
+        db.ForeignKey('employee.employee_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'workrole_id', db.Integer,
+        db.ForeignKey('workrole.workrole_id'),
+        primary_key=True
+    ),
+    db.Column(
+        'created', db.DateTime,
+        default=datetime.datetime.utcnow,
+        nullable=False
+    )
+)
 
 
 class UserAccount(db.Model):
@@ -93,8 +89,8 @@ class Contract(db.Model):
 
 
 class WorkRole(db.Model):
-    __tablename__ = 'work_role'
-    work_role_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    __tablename__ = 'workrole'
+    workrole_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     created = db.Column(
         db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     contract_id = db.Column(db.Integer, db.ForeignKey(
@@ -112,7 +108,7 @@ class WorkRole(db.Model):
         if self.hourly_deduction:
             self.hourly_deduction = float(self.hourly_deduction)
         return{
-            'work_role_id': self.work_role_id,
+            'workrole_id': self.workrole_id,
             'created': self.created,
             'contract_id': self.contract_id,
             'workrole_description': self.workrole_description,
@@ -150,8 +146,8 @@ class TimeWorked(db.Model):
         db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     employee_id = db.Column(db.Integer, db.ForeignKey(
         'employee.employee_id'), unique=True, nullable=False)
-    work_role_id = db.Column(db.Integer, db.ForeignKey(
-        'work_role.work_role_id'), nullable=False)
+    workrole_id = db.Column(db.Integer, db.ForeignKey(
+        'workrole.workrole_id'), nullable=False)
     check_id = db.Column(db.Integer)
     date_worked = db.Column(db.Date, nullable=False)
     time_in = db.Column(db.DateTime)
