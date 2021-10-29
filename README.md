@@ -41,11 +41,11 @@ This project (a work in progress) represents a simple payroll database/API for m
 |POST, PUT|/workrole|Add a new workrole to the database. Request body must include `contract_id`. It may include `workrole_description`, `hour_budget`, `hourly_pay`, `hourly_deduction`. |
 |POST, PUT|/workrole/:id|Modify contract. Request body may include `workrole_description`, `hour_budget`, `hourly_pay`, `hourly_deduction`. 
 
-### **Employee-Workrole
+### **Employee-Workrole**
 |Method|Route|Description|
 |------|-----|-----------|
-|POST, PUT|/employee-workrole|Assign employees to workroles. Request must include a list of at least one `employee_ids` and a list of at least one `workrole_ids`. All listed employees will be added to all workroles (E.g. If `employee_ids` is `[1, 2]"` and `workrole_ids` `[3, 4]` then both employees will be added to both workroles.) |
-|DELETE|/employee-workrole/| Delete employees from workroles. Request must include a list of at least one `employee_ids` and a list of at least one `workrole_ids`. All listed employees will be added to all workroles (E.g. If `employee_ids` is `[1, 2]"` and `workrole_ids` `[3, 4]` then both employees will be deleted from both workroles if present.)
+|POST, PUT|/employee-workrole|Assign employees to workroles. Request must include a list of at least one `employee_ids` and a list of at least one `workrole_ids`. All listed employees will be added to all workroles (E.g. If `employee_ids` is `[1, 2]"` and `workrole_ids` `[3, 4]` then both employees will be added to both workroles.) Returns a dictionary with updated records of relevant employees and workroles.|
+|DELETE|/employee-workrole/| Delete employees from workroles. Request must include a list of at least one `employee_ids` and a list of at least one `workrole_ids`. All listed employees will be added to all workroles (E.g. If `employee_ids` is `[1, 2]"` and `workrole_ids` `[3, 4]` then both employees will be deleted from both workroles if present. Returns a dictionary with updated records of relevant employees and workroles.)
 
 ### **To Be Implemented**: 
 /timeworked, /paycheck
