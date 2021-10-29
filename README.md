@@ -16,7 +16,7 @@ This project (a work in progress) represents a simple payroll database/API for m
 
 |Method|Route|Description|
 |------|-----|-----------|
-|GET|/employee|Show all employee IDs. PII is not displayed.|
+|GET|/employee|Show all employee IDs, including any assigned workroles. PII is not displayed.|
 |POST, PUT|/employee|Add a new employee to the database. Request body may include `ssn`, `first_name`, `last_name` and/or `user_id`.|
 |POST, PUT|/employee/:id|Modify employee data. Request body may include new `ssn`, `first_name`, `last_name` and/or `user_id`. 
 
@@ -37,10 +37,15 @@ This project (a work in progress) represents a simple payroll database/API for m
 ### **Workrole**
 |Method|Route|Description|
 |------|-----|-----------|
-|GET|/workrole|Show all workroles.|
+|GET|/workrole|Show all workroles, including IDs of any assigned employees.|
 |POST, PUT|/workrole|Add a new workrole to the database. Request body must include `contract_id`. It may include `workrole_description`, `hour_budget`, `hourly_pay`, `hourly_deduction`. |
-|POST, PUT|/client/:id|Modify contract. Request body may include `workrole_description`, `hour_budget`, `hourly_pay`, `hourly_deduction`.. 
+|POST, PUT|/workrole/:id|Modify contract. Request body may include `workrole_description`, `hour_budget`, `hourly_pay`, `hourly_deduction`. 
 
+### **Employee-Workrole
+|Method|Route|Description|
+|------|-----|-----------|
+|POST, PUT|/employee-workrole|Assign employees to workroles. Request must include a list of at least one `employee_ids` and a list of at least one `workrole_ids`. All listed employees will be added to all workroles (E.g. If `employee_ids` is `[1, 2]"` and `workrole_ids` `[3, 4]` then both employees will be added to both workroles.) |
+|DELETE|/employee-workrole/| Delete employees from workroles. Request must include a list of at least one `employee_ids` and a list of at least one `workrole_ids`. All listed employees will be added to all workroles (E.g. If `employee_ids` is `[1, 2]"` and `workrole_ids` `[3, 4]` then both employees will be deleted from both workroles if present.)
 
 ### **To Be Implemented**: 
-/employee-workrole, /timeworked, /paycheck
+/timeworked, /paycheck
