@@ -31,8 +31,8 @@ This project (a work in progress) represents a simple payroll database/API for m
 |Method|Route|Description|
 |------|-----|-----------|
 |GET|/contract|Show all contracts.|
-|POST, PUT|/client|Add a new contract to the database. Request body must include `client_id`. It may include `start_date`, `end_date`, and/or `contract_description`. |
-|POST, PUT|/client/:id|Modify contract. Request body may include `start_date`, `end_date`, and/or `contract_description`. 
+|POST, PUT|/contract|Add a new contract to the database. Request body must include `client_id`. It may include `start_date`, `end_date`, and/or `contract_description`. |
+|POST, PUT|/contract/:id|Modify contract. Request body may include `start_date`, `end_date`, and/or `contract_description`. 
 
 ### **Workrole**
 |Method|Route|Description|
