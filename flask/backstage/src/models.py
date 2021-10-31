@@ -164,7 +164,7 @@ class TimeWorked(db.Model):
     created = db.Column(
         db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     employee_id = db.Column(db.Integer, db.ForeignKey(
-        'employee.employee_id'), unique=True, nullable=False)
+        'employee.employee_id'), nullable=False)
     workrole_id = db.Column(db.Integer, db.ForeignKey(
         'workrole.workrole_id'), nullable=False)
     check_id = db.Column(db.Integer)
