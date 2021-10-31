@@ -173,6 +173,19 @@ class TimeWorked(db.Model):
     time_out = db.Column(db.DateTime)
     hours_worked = db.Column(db.Numeric)
 
+    def serialize(self):
+        return {
+            'time_worked_id': self.time_worked_id,
+            'created': self.created,
+            'employee_id': self.employee_id,
+            'workrole_id': self.workrole_id,
+            'check_id': self.check_id,
+            'date_worked': self.date_worked,
+            'time_in': self.time_in,
+            'time_out': self.time_out,
+            'hours_worked': int(self.hours_worked)
+        }
+
 
 class Paycheck(db.Model):
     __tablename__ = 'paycheck'
