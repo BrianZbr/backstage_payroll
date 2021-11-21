@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  flask_backstage:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+      - FLASK_ENV="development"
+    depends_on:
+      - pg
+  pg:
+    container_name: backstage_payroll_pg
+    image: postgres:13.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: backstage_payroll
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/data
+  migration:
+    build: .
+    command: flask db upgrade
+    depends_on:
+      - flask_backstage
